@@ -1,0 +1,8 @@
+## Interface: 11200
+## Title: Fake|cff60ff00Chat|r
+## Author: EinBaum https://github.com/EinBaum
+## Version: 1.0
+## Notes: Create fake chat messages. Menu: /fc or /fakechat
+## SavedVariables: B_FC_GS
+FakeChat.xml
+FakeChat.lua

@@ -1,0 +1,243 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
+	<Script file="FakeChat.lua"/>
+
+	<Frame name="B_FC_ContainerTemplate" virtual="true">
+		<Backdrop bgFile="Interface\DialogFrame\UI-DialogBox-Background" edgeFile="Interface\DialogFrame\UI-DialogBox-Border" tile="true">
+			<BackgroundInsets>
+				<AbsInset left="11" right="12" top="12" bottom="11"/>
+			</BackgroundInsets>
+			<TileSize>
+				<AbsValue val="32"/>
+			</TileSize>
+			<EdgeSize>
+				<AbsValue val="32"/>
+			</EdgeSize>
+		</Backdrop>
+	</Frame>
+	<Frame name="B_FC_MessageTemplate" virtual="true">
+		<Size x="550" y="16" />
+		<Frames>
+			<Frame name="$parent_Type" inherits="UIDropDownMenuTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="$parent">
+						<Offset>
+							<AbsDimension x="-12" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</Frame>
+			<EditBox name="$parent_Text" autoFocus="false" letters="255" inherits="InputBoxTemplate">
+				<Size x="510" y="16" />
+				<Anchors>
+					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$parent_Type">
+						<Offset>
+							<AbsDimension x="120" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+			</EditBox>
+		</Frames>
+	</Frame>
+	<Frame name="B_FC_Frame" inherits="B_FC_ContainerTemplate" toplevel="true" parent="UIParent" enableMouse="true" hidden="true">
+		<Anchors>
+			<Anchor point="CENTER">
+				<Offset>
+					<AbsDimension x="0" y="100"/>
+				</Offset>
+			</Anchor>
+		</Anchors>
+		<Size>
+			<AbsDimension x="700" y="420"/>
+		</Size>
+		<Layers>
+			<Layer level="BACKGROUND">
+			</Layer>
+
+			<Layer level="ARTWORK">
+			</Layer>
+
+			<Layer level="OVERLAY">
+			</Layer>
+		</Layers>
+		<Frames>
+			<EditBox name="B_FC_InputName" autoFocus="false" letters="16" inherits="InputBoxTemplate">
+				<Size x="200" y="16" />
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+						<Offset><AbsDimension x="70" y="-12" /></Offset>
+					</Anchor>
+				</Anchors>
+				<Layers>
+					<Layer level="ARTWORK">
+						<FontString inherits="GameFontHighlightSmall" text="Name:">
+							<Anchors>
+								<Anchor point="RIGHT" relativeTo="B_FC_InputName" relativePoint="LEFT">
+									<Offset><AbsDimension x="-10" y="0"/></Offset>
+								</Anchor>
+							</Anchors>
+						</FontString>
+					</Layer>
+				</Layers>
+				<Scripts>
+					<OnTextChanged>
+						B_FC_GS["Name"] = this:GetText()
+					</OnTextChanged>
+				</Scripts>
+			</EditBox>
+			<CheckButton name="B_FC_ButtonGM" inherits="OptionsCheckButtonTemplate">
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="TOPLEFT">
+						<Offset><AbsDimension x="275" y="-5" /></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+						if this:GetChecked() then
+							PlaySound("igMainMenuOptionCheckBoxOn")
+						else
+							PlaySound("igMainMenuOptionCheckBoxOff")
+						end
+						B_FC_GS["GM"] = this:GetChecked()
+					</OnClick>
+					<OnLoad>
+						getglobal("B_FC_ButtonGMText"):SetText("Is Gamemaster")
+					</OnLoad>
+				</Scripts>
+			</CheckButton>
+			<Button name="B_FC_ButtonReset" inherits="GameMenuButtonTemplate" text="Back to First">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT">
+						<Offset><AbsDimension x="-135" y="-10" /></Offset>
+					</Anchor>
+				</Anchors>
+				<Size>
+					<AbsDimension x="100" y="20"/>
+				</Size>
+				<Scripts>
+					<OnClick>
+						B_FC_Reset()
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="B_FC_ButtonBindings" inherits="GameMenuButtonTemplate" text="Key Bindings">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT">
+						<Offset><AbsDimension x="-35" y="-10" /></Offset>
+					</Anchor>
+				</Anchors>
+				<Size>
+					<AbsDimension x="100" y="20"/>
+				</Size>
+				<Scripts>
+					<OnClick>
+						KeyBindingFrame_LoadUI()
+						ShowUIPanel(KeyBindingFrame)
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="B_FC_ButtonClose" inherits="UIPanelCloseButton">
+				<Anchors>
+					<Anchor point="TOPRIGHT" relativePoint="TOPRIGHT">
+						<Offset><AbsDimension x="-5" y="-5" /></Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnClick>
+					B_FC_Frame:Hide()
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="B_FC_ButtonDelete" inherits="GameMenuButtonTemplate" text="Reset Setup">
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT">
+						<Offset><AbsDimension x="-230" y="-4"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Size>
+					<AbsDimension x="100" y="20"/>
+				</Size>
+				<Scripts>
+					<OnClick>
+						StaticPopupDialogs["B_FC_OptionDelete"] = {
+							text = "Reset all settings?",
+							button1 = TEXT(ACCEPT),
+							button2 = TEXT(CANCEL),
+							OnAccept = function()
+								B_FC_InitializeSettings()
+								B_FC_UpdateGUI()
+							end,
+							timeout = 0,
+						}
+						StaticPopup_Show("B_FC_OptionDelete")
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="B_FC_ButtonExport" inherits="GameMenuButtonTemplate" text="Export">
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT">
+						<Offset><AbsDimension x="-130" y="-4"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Size>
+					<AbsDimension x="100" y="20"/>
+				</Size>
+				<Scripts>
+					<OnClick>
+						StaticPopupDialogs["B_FC_OptionExport"] = {
+							text = "Export:",
+							button1 = TEXT(OKAY),
+							button2 = TEXT(OKAY),
+							hasEditBox = 1,
+							OnShow = function()
+								local box = getglobal(this:GetName().."EditBox")
+								box:SetText("B_FC_GS=" .. B_FC_PrintTable(B_FC_GS))
+								box:SetFocus()
+							end,
+							timeout = 0,
+						}
+						StaticPopup_Show("B_FC_OptionExport")
+					</OnClick>
+				</Scripts>
+			</Button>
+			<Button name="B_FC_ButtonImport" inherits="GameMenuButtonTemplate" text="Import">
+				<Anchors>
+					<Anchor point="BOTTOMRIGHT" relativePoint="BOTTOMRIGHT">
+						<Offset><AbsDimension x="-30" y="-4"/></Offset>
+					</Anchor>
+				</Anchors>
+				<Size>
+					<AbsDimension x="100" y="20"/>
+				</Size>
+				<Scripts>
+					<OnClick>
+						StaticPopupDialogs["B_FC_OptionImport"] = {
+							text = "Import:",
+							button1 = TEXT(ACCEPT),
+							button2 = TEXT(CANCEL),
+							hasEditBox = 1,
+							OnAccept = function()
+								local text = getglobal(this:GetParent():GetName().."EditBox"):GetText()
+								RunScript(text)
+								B_FC_UpdateGUI()
+							end,
+							OnShow = function()
+								getglobal(this:GetName().."EditBox"):SetFocus()
+							end,
+							timeout = 0,
+						}
+						StaticPopup_Show("B_FC_OptionImport")
+					</OnClick>
+				</Scripts>
+			</Button>
+		</Frames>
+		<Scripts>
+			<OnLoad>
+				B_FC_OnLoad()
+			</OnLoad>
+			<OnEvent>
+				B_FC_OnEvent()
+			</OnEvent>
+		</Scripts>
+	</Frame>
+</Ui>

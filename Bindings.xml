@@ -1,0 +1,11 @@
+<Bindings>
+	<Binding name="Send Message" header="FAKECHAT">
+		B_FC_Trigger()
+	</Binding>
+	<Binding name="Back To First">
+		B_FC_Reset()
+	</Binding>
+	<Binding name="Show GUI">
+		B_FC_ShowGUI()
+	</Binding>
+</Bindings>
