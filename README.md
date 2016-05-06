@@ -2,7 +2,7 @@
 
 ###Features
 
-This AddOn can add chat messages to your chat that look like they are real messages.
+This Addon can add chat messages to your chat that look like they are real messages.
 
 - Make it look like you are whispering someone (they will not receive the message even if online)
 - Make a fake person whisper you with pre-programmed messages when pressing a hotkey
@@ -21,4 +21,4 @@ This AddOn can add chat messages to your chat that look like they are real messa
 
 ###Preview
 
-![Preview](/preview.png?raw=true "Preview")
+![Preview](/preview.jpg?raw=true "Preview")
