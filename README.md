@@ -1,6 +1,6 @@
-#FakeChat
+# FakeChat
 
-###Features
+### Features
 
 This Addon can add chat messages to your chat that look like they are real messages.
 
@@ -8,7 +8,7 @@ This Addon can add chat messages to your chat that look like they are real messa
 - Make a fake person whisper you with pre-programmed messages when pressing a hotkey
 - Designed with video recording in mind; key bindings are used to send the messages
 
-###Usage
+### Usage
 
 - Type /fc or /fakechat into the chat to open the menu
 - Enter the fake player name into the "Name" field
@@ -19,6 +19,6 @@ This Addon can add chat messages to your chat that look like they are real messa
 - Press "Back To First" or the appropriate hotkey to go back to the first message in the list
 - You can whisper the fake player. The messages that you send will not arrive even if the real player is online
 
-###Preview
+### Preview
 
 ![Preview](/preview.jpg?raw=true "Preview")
