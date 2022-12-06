@@ -64,7 +64,7 @@ function B_FC_InitializeMessages()
 		local frameType, frameText = frameMessage:GetChildren()
 
 		UIDropDownMenu_Initialize(frameType, function()
-			local info = UIDropDownMenu_CreateInfo()
+			local info = {}
 			for k,v in B_FC_Types do
 				info.text = v
 				info.value = v
